@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exe.cute | Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Login Screen -->
+    <div id="adminLoginScreen" class="admin-login-screen">
+        <div class="admin-login-box">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Admin Access</h1>
+            <input type="password" id="adminPassInput" placeholder="Enter Master Password">
+            <button onclick="checkAdminAccess()"><i class="fas fa-unlock"></i> Access Panel</button>
+            <p id="adminLoginError" class="error-msg"></p>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Website</a>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-brand">
+                <i class="fas fa-code"></i>
+                <span>Exe.cute Admin</span>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="active" onclick="showAdminTab('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" onclick="showAdminTab('posts')">
+                    <i class="fas fa-newspaper"></i> Manage Posts
+                </a>
+                <a href="#" onclick="showAdminTab('announcements')">
+                    <i class="fas fa-bullhorn"></i> Announcements
+                </a>
+                <a href="#" onclick="showAdminTab('gallery')">
+                    <i class="fas fa-images"></i> Gallery
+                </a>
+                <a href="#" onclick="showAdminTab('comments')">
+                    <i class="fas fa-comments"></i> Comments
+                    <span id="pendingCommentsBadge" class="badge">0</span>
+                </a>
+                <a href="#" onclick="showAdminTab('settings')">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <button onclick="logoutAdmin()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Tab -->
+            <div id="tab-dashboard" class="admin-tab active">
+                <h1>Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-newspaper"></i>
+                        <div>
+                            <h3 id="statPosts">0</h3>
+                            <p>Total Posts</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-bullhorn"></i>
+                        <div>
+                            <h3 id="statAnnouncements">0</h3>
+                            <p>Announcements</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-images"></i>
+                        <div>
+                            <h3 id="statImages">0</h3>
+                            <p>Gallery Images</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-comments"></i>
+                        <div>
+                            <h3 id="statPending">0</h3>
+                            <p>Pending Comments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Tab -->
+            <div id="tab-posts" class="admin-tab">
+                <h1>Manage Posts</h1>
+                <div class="admin-form">
+                    <h3>Add New Post</h3>
+                    <input type="text" id="postTitle" placeholder="Post Title">
+                    <textarea id="postContent" placeholder="Post Content" rows="5"></textarea>
+                    <input type="text" id="postAuthor" placeholder="Author Name">
+                    <button onclick="addPost()"><i class="fas fa-plus"></i> Add Post</button>
+                </div>
+                <div id="adminPostsList" class="admin-list">
+                    <!-- Posts list -->
+                </div>
+            </div>
+
+            <!-- Announcements Tab -->
+            <div id="tab-announcements" class="admin-tab">
+                <h1>Manage Announcements</h1>
+                <div class="admin-form">
+                    <h3>Add New Announcement</h3>
+                    <input type="text" id="announceTitle" placeholder="Announcement Title">
+                    <textarea id="announceContent" placeholder="Announcement Content" rows="4"></textarea>
+                    <select id="announcePriority">
+                        <option value="normal">Normal Priority</option>
+                        <option value="high">High Priority</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                    <button onclick="addAnnouncement()"><i class="fas fa-plus"></i> Add Announcement</button>
+                </div>
+                <div id="adminAnnouncementsList" class="admin-list">
+                    <!-- Announcements list -->
+                </div>
+            </div>
+
+            <!-- Gallery Tab -->
+            <div id="tab-gallery" class="admin-tab">
+                <h1>Manage Gallery</h1>
+                <div class="admin-form">
+                    <h3>Add New Image</h3>
+                    <input type="text" id="imageUrl" placeholder="Image URL (or base64)">
+                    <input type="text" id="imageCaption" placeholder="Image Caption">
+                    <button onclick="addImage()"><i class="fas fa-plus"></i> Add Image</button>
+                </div>
+                <div id="adminGalleryList" class="admin-list gallery-admin-list">
+                    <!-- Gallery list -->
+                </div>
+            </div>
+
+            <!-- Comments Tab -->
+            <div id="tab-comments" class="admin-tab">
+                <h1>Manage Comments</h1>
+                <div class="comments-filter">
+                    <button onclick="filterComments('pending')" class="filter-btn active" id="btn-pending">Pending</button>
+                    <button onclick="filterComments('approved')" class="filter-btn" id="btn-approved">Approved</button>
+                    <button onclick="filterComments('all')" class="filter-btn" id="btn-all">All</button>
+                </div>
+                <div id="adminCommentsList" class="admin-list">
+                    <!-- Comments list -->
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="admin-tab">
+                <h1>Settings</h1>
+                <div class="settings-form">
+                    <h3>Admin Configuration</h3>
+                    <label>Change Admin Password</label>
+                    <input type="password" id="newAdminPass" placeholder="New Password">
+                    <input type="password" id="confirmAdminPass" placeholder="Confirm New Password">
+                    <button onclick="changeAdminPassword()"><i class="fas fa-save"></i> Update Password</button>
+                    
+                    <hr>
+                    
+                    <h3>Email Configuration</h3>
+                    <label>Admin Gmail</label>
+                    <input type="email" id="adminEmail" placeholder="admin@gmail.com">
+                    <button onclick="saveAdminEmail()"><i class="fas fa-save"></i> Save Email</button>
+                    
+                    <hr>
+                    
+                    <h3>Data Management</h3>
+                    <button onclick="exportData()" class="export-btn"><i class="fas fa-download"></i> Export All Data</button>
+                    <button onclick="clearAllData()" class="danger-btn"><i class="fas fa-trash"></i> Clear All Data</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "bscs1dash3.firebaseapp.com",
+            databaseURL: "https://bscs1dash3-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "bscs1dash3",
+            storageBucket: "bscs1dash3.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
+    
+    <script src="admin.js"></script>
+</body>
+</html>

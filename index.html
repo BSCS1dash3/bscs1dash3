@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exe.cute | BSCS Community</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-code"></i>
+            <span>Exe.cute</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#announcement"><i class="fas fa-bullhorn"></i> Announcement</a></li>
+            <li><a href="#images"><i class="fas fa-images"></i> Images</a></li>
+            <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="adminLoginBtn" class="admin-btn"><i class="fas fa-lock"></i> Admin</button>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active-section">
+        <div class="hero">
+            <h1>Welcome to <span class="highlight">Exe.cute</span></h1>
+            <p>BSCS Community Hub - Read, Share, Connect</p>
+        </div>
+        
+        <div class="content-area">
+            <h2><i class="fas fa-newspaper"></i> Latest Content</h2>
+            <div id="postsContainer" class="posts-container">
+                <!-- Posts will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Comment Section for BSCS Students -->
+        <div class="comment-section">
+            <h3><i class="fas fa-comments"></i> Comments (BSCS Students Only)</h3>
+            <form id="commentForm" class="comment-form">
+                <input type="text" id="studentName" placeholder="Your Full Name" required>
+                <input type="text" id="studentId" placeholder="Student ID (e.g., 2023-01234)" required>
+                <select id="yearLevel" required>
+                    <option value="">Select Year Level</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                </select>
+                <textarea id="commentText" placeholder="Write your comment here..." rows="4" required></textarea>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Submit Comment</button>
+            </form>
+            
+            <div id="commentsDisplay" class="comments-display">
+                <p class="no-comments">Comments will appear here after admin approval.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcement Section -->
+    <section id="announcement" class="section">
+        <div class="section-header">
+            <h1><i class="fas fa-bullhorn"></i> Announcements</h1>
+            <p>Stay updated with the latest BSCS news</p>
+        </div>
+        <div id="announcementsContainer" class="announcements-container">
+            <!-- Announcements loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Images Section -->
+    <section id="images" class="section">
+        <div class="section-header">
+            <h1><i class="fas fa-images"></i> Gallery</h1>
+            <p>Captured moments from BSCS events</p>
+        </div>
+        <div id="galleryContainer" class="gallery-container">
+            <!-- Images loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-header">
+            <h1><i class="fas fa-info-circle"></i> About Exe.cute</h1>
+        </div>
+        <div class="about-content">
+            <div class="about-card">
+                <h2>What is Exe.cute?</h2>
+                <p>Exe.cute is the official community platform for Bachelor of Science in Computer Science students. It serves as a hub for sharing knowledge, announcements, and connecting with fellow BSCS students.</p>
+            </div>
+            <div class="about-card">
+                <h2>Features</h2>
+                <ul>
+                    <li><i class="fas fa-check"></i> Read exclusive BSCS content</li>
+                    <li><i class="fas fa-check"></i> Get latest announcements</li>
+                    <li><i class="fas fa-check"></i> View event galleries</li>
+                    <li><i class="fas fa-check"></i> Comment (BSCS verified students only)</li>
+                </ul>
+            </div>
+            <div class="about-card">
+                <h2>Contact</h2>
+                <p><i class="fas fa-envelope"></i> For inquiries, comments will be sent directly to admin.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Login Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-lock"></i> Admin Login</h2>
+            <form id="adminLoginForm">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+        <p id="lightbox-caption"></p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="firebase-sync.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
